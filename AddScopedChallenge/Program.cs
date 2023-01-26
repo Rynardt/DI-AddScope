@@ -1,73 +1,38 @@
-﻿// See https://aka.ms/new-console-template for more information
-using Autofac;
+﻿using Autofac;
 
 class Program
 {
     static void Main(string[] args)
     {
         var builder = new ContainerBuilder();
-        builder.RegisterType<ConsoleLogger>().As<ILogger>().InstancePerLifetimeScope();
-        builder.RegisterType<Calculator>().As<ICalculator>();
-        var container = builder.Build();
-
-        using (var scope = container.BeginLifetimeScope())
-        {
-            var userInput = scope.Resolve<UserInput>();
-            userInput.GetInputAndPrintResult();
-        }
+        //Your Code for registering goes here...
     }
 }
 
 class Calculator : ICalculator
 {
     private readonly ILogger _logger;
-    public Calculator(ILogger logger)
-    {
-        _logger = logger;
-    }
+    //Your constructors and methods
 
-    public int Add(int num1, int num2)
-    {
-        _logger.Log("Adding numbers...");
-        return num1 + num2;
-    }
 }
 
 class UserInput
 {
     private readonly ICalculator _calculator;
-    public UserInput(ICalculator calculator)
-    {
-        _calculator = calculator;
-    }
-
-    public void GetInputAndPrintResult()
-    {
-        Console.Write("Enter first number: ");
-        var num1 = int.Parse(Console.ReadLine());
-
-        Console.Write("Enter second number: ");
-        var num2 = int.Parse(Console.ReadLine());
-
-        var result = _calculator.Add(num1, num2);
-        Console.WriteLine("Result: " + result);
-    }
+   //Your constructor and methods
 }
 
 interface ICalculator
 {
-    int Add(int num1, int num2);
+    //Definition of Interface
 }
 
 interface ILogger
 {
-    void Log(string message);
+    //Definition of Interface
 }
 
 class ConsoleLogger : ILogger
 {
-    public void Log(string message)
-    {
-        Console.WriteLine(message);
-    }
+    //Your logging method
 }
